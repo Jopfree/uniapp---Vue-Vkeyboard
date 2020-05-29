@@ -1,0 +1,61 @@
+@mixin transform($trans) {
+  -webkit-transform: $trans;
+  -moz-transform: $trans;
+  -ms-transform: $trans;
+  -o-transform: $trans;
+  transform: $trans;
+}
+
+@mixin transition($trans) {
+  -moz-transition: $trans;
+  -ms-transition: $trans;
+  transition: $trans;
+}
+
+/*平滑动画，向上滑入，向下滑出*/
+@keyframes slidedown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@-webkit-keyframes slidedown {
+  from {
+    -webkit-transform: translateY(0);
+  }
+  to {
+    -webkit-transform: translateY(100%);
+  }
+}
+
+@-webkit-keyframes slideup {
+  from {
+    -webkit-transform: translateY(100%);
+  }
+  to {
+    -webkit-transform: translateY(0);
+  }
+}
+
+@keyframes slideup {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.slidedown {
+  animation: slidedown 0.3s linear;
+  animation-fill-mode:forwards;
+  @include transform(translateY(100%));
+}
+.slideup {
+  animation: slideup 0.3s linear;
+  animation-fill-mode:forwards;
+  @include transform(translateY(0));
+}
