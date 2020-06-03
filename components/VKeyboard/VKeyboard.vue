@@ -1,5 +1,5 @@
 <template>
-	<view :class="keyboardStyle" class="enl-size">
+	<view v-if="showKeyboard" :class="keyboardStyle" class="enl-size">
 		<view class="digit-keyboard" v-if="mode === 'digit' || digital">
 			<view class="digit-button-box">
 				<template v-for="(digit, index) in digits">
@@ -74,6 +74,7 @@
 			return {
 				cls: '',
 				visible: false, //是否显示
+				showKeyboard: false, //是否隐藏
 				digits: [], //自然数数组
 				lines: [], //字母+数字数组
 				lowercase: true, //是否小写输入状态
@@ -131,11 +132,17 @@
 				// #ifdef APP-PLUS
 				plus.key.hideSoftKeybord();
 				// #endif
-				this.visible = true;
+				this.showKeyboard = true
+				this.$nextTick(() => {
+					this.visible = true;
+				})
 			},
 			//隐藏键盘
 			deactivate() {
 				this.visible = false;
+				setTimeout(() => {
+					this.showKeyboard = false
+				}, 250)
 			}
 		},
 		watch: {
@@ -160,7 +167,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import './css.scss';//引入键盘样式
+	@import './css.scss'; //引入键盘样式
 	@import './icon.css'; //引入键盘icon
 
 	.iconfont {
